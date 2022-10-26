@@ -4,6 +4,9 @@ body{
    padding-top: 80px;
    padding-bottom: 80px;
 }
+ion-icon:hover {
+    color: #363636;
+}
 .topo{
     position: fixed;
     top: 0;
@@ -19,6 +22,34 @@ body{
 .container{
     margin-top: 25px;
     width: 100%;
+    overflow-y: scroll;
+}
+.mensagem{
+    font-family: 'Roboto', sans-serif;
+    padding: 9px;
+    margin-bottom: 4px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #fff;
+}
+.reservadas{
+    background-color: #FFDEDE;
+}
+.status{
+    background-color: #DCDCDC;
+}
+.nome{
+    font-weight: 700;
+    margin-right: 5px;
+}
+.horario{
+    color: #AAAAAA;
+    margin-right: 5px;
+}
+.texto{
+    margin-right: 5px;
+    line-height: 30px;
 }
 .rodape{
     position: fixed;
