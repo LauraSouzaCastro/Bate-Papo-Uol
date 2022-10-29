@@ -1,28 +1,33 @@
-let nome;
-function inicializaPagina(){
-    nome = {name : prompt("Qual o seu nome?")};
-    const promessa = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', nome);
-    promessa.then(sucesso);
-    promessa.catch(falha);
+let nome, div;
+function entrar(){
+    div = document.querySelector(".telaEntrada");
+    if(div.children[1].value !== ''){
+        nome = {name : `${div.children[1].value}`};
+        div.children[1].value = '';
+        const promessa = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', nome);
+        promessa.then(sucesso);
+        promessa.catch(falha);
+    }
 }
 function sucesso(resposta) {
+    div.classList.add("desabilitada");
+    div.classList.remove("telaEntrada");
+    setInterval(mantemConexao, 5000);
 	atualizaMensagens();
+    setInterval(atualizaMensagens, 3000);
 }
 function falha(erro) {
-    inicializaPagina();
+    document.querySelector('.nomeInvalido').classList.remove('desabilitada');
 }
 function mantemConexao(){
-    const promessa = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nome);
+    axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nome);
 }
-setInterval(mantemConexao, 5000);
-inicializaPagina();
 function atualizaMensagens(){
     const mensagem = document.querySelector(".container");
     mensagem.innerHTML = "";
     const promessa = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promessa.then(processarMensagens);
 }
-setInterval(atualizaMensagens, 3000);
 function processarMensagens(resposta){
     let listaMensagens = resposta.data;
     const mensagem = document.querySelector(".container");
@@ -45,7 +50,7 @@ function processarMensagens(resposta){
                     <span class="texto">${listaMensagens[i].text}</span>
                 </div>
             `;
-        }else if(listaMensagens[i].type === "private_message" && listaMensagens[i].to === nome.name){
+        }else if((listaMensagens[i].type === "private_message" && listaMensagens[i].to === nome.name) || (listaMensagens[i].type === "private_message" && listaMensagens[i].from === nome.name)){
             mensagem.innerHTML += `
                 <div class="mensagem reservadas" id="${i}">
                     <span class="horario">(${listaMensagens[i].time})</span>
@@ -63,12 +68,14 @@ function processarMensagens(resposta){
 function enviarMensagem(botaoEnviar){
     const rodape = botaoEnviar.parentNode;
     let texto = rodape.children[0].value;
-    let mensagem = {
-        from: nome.name,
-        to: "Todos",
-        text: texto,
-        type: "message"
+    if(texto !== ''){
+        let mensagem = {
+            from: nome.name,
+            to: "Todos",
+            text: texto,
+            type: "message"
+        }
+        axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
+        rodape.children[0].value = '';
     }
-    axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
-    rodape.children[0].value = '';
 }
