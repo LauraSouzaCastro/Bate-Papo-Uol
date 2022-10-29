@@ -101,6 +101,7 @@ ion-icon:hover {
     background-color: #DCDCDC;
 }
 .nome{
+    word-wrap: break-word;
     font-weight: 700;
     margin-right: 5px;
 }
