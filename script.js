@@ -5,11 +5,18 @@ function entrar(){
         nome = {name : `${div.children[1].value}`};
         div.children[1].value = '';
         const promessa = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', nome);
+        div.children[1].classList.add('desabilitada');
+        div.children[2].classList.add('desabilitada');
+        div.children[3].classList.add('desabilitada');
+        div.children[4].classList.remove('desabilitada');
+        div.children[5].classList.remove('desabilitada');
         promessa.then(sucesso);
         promessa.catch(falha);
     }
 }
 function sucesso(resposta) {
+    div.children[4].classList.add('desabilitada');
+    div.children[5].classList.add('desabilitada');
     div.classList.add("desabilitada");
     div.classList.remove("telaEntrada");
     setInterval(mantemConexao, 5000);
@@ -17,7 +24,11 @@ function sucesso(resposta) {
     setInterval(atualizaMensagens, 3000);
 }
 function falha(erro) {
-    document.querySelector('.nomeInvalido').classList.remove('desabilitada');
+    div.children[1].classList.remove('desabilitada');
+    div.children[2].classList.remove('desabilitada');
+    div.children[3].classList.remove('desabilitada');
+    div.children[4].classList.add('desabilitada');
+    div.children[5].classList.add('desabilitada');
 }
 function mantemConexao(){
     axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nome);
@@ -62,8 +73,6 @@ function processarMensagens(resposta){
             `;
         }
     }
-    const elementoQueQueroQueApareca = document.getElementById(`${listaMensagens.length-1}`);
-    elementoQueQueroQueApareca.scrollIntoView();
 }
 function enviarMensagem(botaoEnviar){
     const rodape = botaoEnviar.parentNode;
@@ -79,3 +88,10 @@ function enviarMensagem(botaoEnviar){
         rodape.children[0].value = '';
     }
 }
+const inputEle = document.getElementById('placeholder-text');
+inputEle.addEventListener("keypress", function(e) {
+    if(e.key === 'Enter') {
+        let btn = document.querySelector(".bEnviar");
+        btn.click();
+    }
+});

@@ -11,9 +11,11 @@
 <body>
     <div class="telaEntrada">
         <img class="logo2" src="./imagem/logo 2.png" alt="">
-        <input type="text" name="nome" id="nomeUsuario" placeholder="Digite seu nome">
+        <input type="text" name="nome" id="nomeUsuario" placeholder="Digite seu nome" data-identifier="enter-name">
         <div class="nomeInvalido desabilitada">Digite outro nome, pois este já está em uso</div>
-        <button class="bEntrar" onclick="entrar()">Entrar</button>
+        <button class="bEntrar" onclick="entrar()" data-identifier="start">Entrar</button>
+        <img src="./imagem/Loading_icon.gif" alt="" class="desabilitada">
+        <div class="entrando desabilitada">Entrando...</div>
     </div>
     <div class="topo">
         <img class="logo" src="./imagem/logo 1.png" alt="logo da UOL">
