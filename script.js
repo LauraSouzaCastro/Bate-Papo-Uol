@@ -132,7 +132,7 @@ function processaParticipantes(resposta){
     const lista = document.querySelector(".lista");
     for(let i = 0; i < listaParticipantes.length; i++){
         lista.innerHTML += `
-        <div class="caixaParticipante" onclick="selecionar(this)"><div class="caixaNome"><ion-icon class="iParticipante" name="person-circle"></ion-icon><span class="participante">${listaParticipantes[i].name}</span></div><ion-icon class="selecionado desabilitada" name="checkmark-sharp"></ion-icon></div>
+        <div class="caixaParticipante" onclick="selecionar(this)"><div class="caixaNome"><ion-icon class="iParticipante" name="person-circle"></ion-icon><span class="participante">${listaParticipantes[i].name}</span></div><img class="selecionado desabilitada" src="./imagem/Vector.png" alt=""></div>
         `;
     }
 }
