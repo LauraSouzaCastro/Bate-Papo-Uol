@@ -1,4 +1,5 @@
-let nome, div, elementoQueQueroQueApareca = '', listaAntiga = [], listaMensagens = [{from: '', text: '', time: '', to: '', type: ''}], ultimaMensagem = '', novaMensagem = '';
+const inputEle = document.getElementById('placeholder-text');
+let nome, para = "Todos", tipo = "message", div, elementoQueQueroQueApareca = '', listaAntiga = [], listaMensagens = [{from: '', text: '', time: '', to: '', type: ''}], ultimaMensagem = '', novaMensagem = '';
 function entrar(){
     div = document.querySelector(".telaEntrada");
     if(div.children[1].value !== ''){
@@ -54,7 +55,7 @@ function processarMensagens(resposta){
                         <span class="texto">${listaMensagens[i].text}</span>
                     </div>
                 `;
-            } else if(listaMensagens[i].type === "message" && listaMensagens[i].to === "Todos"){
+            } else if(listaMensagens[i].type === "message"){
                 mensagem.innerHTML += `
                     <div class="mensagem" id="${i}">
                         <span class="horario">(${listaMensagens[i].time})</span>
@@ -77,21 +78,23 @@ function processarMensagens(resposta){
             }
         }
         elementoQueQueroQueApareca = document.getElementById(listaMensagens.length-1);
-        elementoQueQueroQueApareca.scrollIntoView();
+        if(elementoQueQueroQueApareca !== null){
+            elementoQueQueroQueApareca.scrollIntoView();
+        }     
     }
 }
 function enviarMensagem(botaoEnviar){
     const rodape = botaoEnviar.parentNode;
-    let texto = rodape.children[0].value;
+    let texto = rodape.children[0].children[0].value;
     if(texto !== ''){
         let mensagem = {
             from: nome.name,
-            to: "Todos",
+            to: para,
             text: texto,
-            type: "message"
+            type: tipo
         }
         const promessa = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
-        rodape.children[0].value = '';
+        rodape.children[0].children[0].value = '';
         promessa.then(atualizaMensagens);
         promessa.catch(atualizaPagina);
     }
@@ -99,10 +102,67 @@ function enviarMensagem(botaoEnviar){
 function atualizaPagina(){
     window.location.reload();
 }
-const inputEle = document.getElementById('placeholder-text');
 inputEle.addEventListener("keypress", function(e) {
     if(e.key === 'Enter') {
         let btn = document.querySelector(".bEnviar");
         btn.click();
     }
 });
+function encolher(item){
+    item.classList.add("desabilitada");
+    const lista = document.querySelector(".listaParticipantes");
+    lista.classList.add("desabilitada");
+    const container = document.querySelector("body");
+    container.classList.remove("naoRola");
+    const listaP = document.querySelector(".lista");
+    listaP.innerHTML = "";
+}
+function participantes(){
+    const fundo = document.querySelector(".fundo");
+    const lista = document.querySelector(".listaParticipantes");
+    const container = document.querySelector("body");
+    container.classList.add("naoRola");
+    lista.classList.remove("desabilitada");
+    fundo.classList.remove("desabilitada");
+    const promessa = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    promessa.then(processaParticipantes);
+}
+function processaParticipantes(resposta){
+    let listaParticipantes = resposta.data;
+    const lista = document.querySelector(".lista");
+    for(let i = 0; i < listaParticipantes.length; i++){
+        lista.innerHTML += `
+        <div class="caixaParticipante" onclick="selecionar(this)"><div class="caixaNome"><ion-icon class="iParticipante" name="person-circle"></ion-icon><span class="participante">${listaParticipantes[i].name}</span></div><ion-icon class="selecionado desabilitada" name="checkmark-sharp"></ion-icon></div>
+        `;
+    }
+}
+function selecionar(item){
+    const caixas = document.querySelectorAll(".caixaParticipante");
+    for(let i = 0; i < caixas.length; i++){
+        caixas[i].children[1].classList.add("desabilitada");
+        item.children[1].classList.remove("desabilitada"); 
+    }
+    para = item.children[0].children[1].innerHTML; 
+    const descricao = document.querySelector(".descricao");
+    if(para === "Todos"){
+        descricao.classList.add("desabilitada");
+    }else{
+        descricao.classList.remove("desabilitada");
+        descricao.children[0].innerHTML = `Enviando para ${para}`;
+    }
+}
+function selecionarV(item){
+    const caixas = document.querySelectorAll(".caixaParticipanteV");
+    for(let i = 0; i < caixas.length; i++){
+        caixas[i].children[1].classList.add("desabilitada");
+        item.children[1].classList.remove("desabilitada"); 
+    } 
+    const descricao = document.querySelector(".descricao");
+    if(item.children[0].children[1].innerHTML === "Público"){
+        tipo = "message";
+        descricao.children[1].classList.add("desabilitada");
+    }else{
+        tipo = "private_message";
+        descricao.children[1].classList.remove("desabilitada");
+    }
+}

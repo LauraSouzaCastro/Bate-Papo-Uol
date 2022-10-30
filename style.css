@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
 body{
     background-color: #F3F3F3;
 }
@@ -125,6 +125,15 @@ ion-icon:hover {
     width: 100%;
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
 }
+.descricao{
+    font-family: 'Roboto', sans-serif;
+    color: #505050;
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 17px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
 .logo{
     margin-left: 22px;
 }
@@ -157,4 +166,89 @@ ion-icon:hover {
     font-style: italic;
     font-size: 18px;
     opacity: 1;
+}
+.fundo{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);;
+}
+.listaParticipantes{
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 70%;
+    background-color: #fff;
+    box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.25);
+    overflow-y: scroll;
+}
+.titulo{
+    height: 84px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+}
+.naoRola{
+    overflow-y: hidden;
+}
+.participante{
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+.iParticipante{
+    margin-left: 17px;
+    height: 25px;
+    width: 25px;
+}
+.caixaParticipante{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+    width: 100%;
+}
+.caixaParticipanteV{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+    width: 100%;
+}
+.caixaNome{
+    display: flex;
+    align-items: center;
+}
+.visibilidade{
+    height: 66px;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.selecionado{
+    color: #28BB25;
+    height: 10px;
+    width: 10px;
+    size: 30px;
+    font-size: 50px;
+    margin-right: 15px;
 }
