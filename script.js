@@ -23,6 +23,7 @@ function sucesso() {
     setInterval(mantemConexao, 5000);
 	atualizaMensagens();
     setInterval(atualizaMensagens, 3000);
+    setInterval(atualizaParticipantes, 10000);
 }
 function falha() {
     div.children[1].classList.remove('desabilitada');
@@ -124,6 +125,10 @@ function participantes(){
     container.classList.add("naoRola");
     lista.classList.remove("desabilitada");
     fundo.classList.remove("desabilitada");
+    const promessa = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    promessa.then(processaParticipantes);
+}
+function atualizaParticipantes(){
     const promessa = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
     promessa.then(processaParticipantes);
 }
