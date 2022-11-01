@@ -50,7 +50,7 @@ function processarMensagens(resposta){
         for(let i = 0; i < listaMensagens.length; i++){
             if(listaMensagens[i].type === "status"){
                 mensagem.innerHTML += `
-                    <div class="mensagem status" id="${i}">
+                    <div class="mensagem status" id="${i}" data-test="message">
                         <span class="horario">(${listaMensagens[i].time})</span>
                         <span class="nome">${listaMensagens[i].from}</span>
                         <span class="texto">${listaMensagens[i].text}</span>
@@ -58,7 +58,7 @@ function processarMensagens(resposta){
                 `;
             } else if(listaMensagens[i].type === "message"){
                 mensagem.innerHTML += `
-                    <div class="mensagem" id="${i}">
+                    <div class="mensagem" id="${i}" data-test="message">
                         <span class="horario">(${listaMensagens[i].time})</span>
                         <span class="nome">${listaMensagens[i].from}</span>
                         <span class="texto">para</span>
@@ -68,7 +68,7 @@ function processarMensagens(resposta){
                 `;
             }else if((listaMensagens[i].type === "private_message" && listaMensagens[i].to === nome.name) || (listaMensagens[i].type === "private_message" && listaMensagens[i].from === nome.name)){
                 mensagem.innerHTML += `
-                    <div class="mensagem reservadas" id="${i}">
+                    <div class="mensagem reservadas" id="${i}" data-test="message">
                         <span class="horario">(${listaMensagens[i].time})</span>
                         <span class="nome">${listaMensagens[i].from}</span>
                         <span class="texto">reservadamente para</span>
@@ -137,7 +137,7 @@ function processaParticipantes(resposta){
     const lista = document.querySelector(".lista");
     for(let i = 0; i < listaParticipantes.length; i++){
         lista.innerHTML += `
-        <div class="caixaParticipante" onclick="selecionar(this)"><div class="caixaNome"><ion-icon class="iParticipante" name="person-circle"></ion-icon><span class="participante">${listaParticipantes[i].name}</span></div><img class="selecionado desabilitada" src="./imagem/Vector.png" alt=""></div>
+        <div class="caixaParticipante" onclick="selecionar(this)" data-test="participant"><div class="caixaNome"><ion-icon class="iParticipante" name="person-circle"></ion-icon><span class="participante">${listaParticipantes[i].name}</span></div><img class="selecionado desabilitada" src="./imagem/Vector.png" alt="" data-test="check"></div>
         `;
     }
 }
